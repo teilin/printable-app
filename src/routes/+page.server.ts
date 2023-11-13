@@ -16,11 +16,9 @@ export const actions = {
         if(!inludesFileType) return fail(500, {error: true, message: "Unsupported file type"});
 
         if(file) {
-          console.log("File set");
           const buffer = await file.arrayBuffer();
-          const stream = await file.stream();
 
-          const response = await fetch('https://printabledigipost.azurewebsites.net/api/DigipostPrintable', {
+          const response = await fetch('https://printabledigipost.azurewebsites.net/api/DigipostPrintable?filename='+file.name, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/octet-stream'
@@ -33,7 +31,6 @@ export const actions = {
 
           return {success: true, data: responseData};
         }
-//{"okForPrint":false,"okForWeb":true,"pages":1,"errors":["The left m
         return fail(500, {error: true, message: "Something went wrong handing the file."});
     }
 }
